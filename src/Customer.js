@@ -9,12 +9,9 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
     let ascending = false;
     let descending = false;
     let bidArr = [];
-    let ascArr = bidArr.sort((a,b) => {
-        return b-a;
-    })
     const [minBid,setMinBid] = useState("");
 
-    console.log("Selected Context Value",range["state"])
+    //console.log("Selected Context Value",range["state"])
     if(range["state"] === "ascending") {
         ascending = true;
         descending = false;
@@ -29,36 +26,28 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
     }
 
     for(let i=0; i<bids.length;i++) {
-        console.log("Bids Arr",bids[i]["amount"])
+        //console.log("Bids Arr",bids[i]["amount"])
         bidArr.push(bids[i]["amount"])
     }
 
-    console.log("BIDS",ascArr);
+    console.log("BIDS",bids);
+
+    bidArr.sort(function(a,b) {
+        return a-b;
+    })
 
     useEffect(() => {
         let largestBid= bids.length === 1 ? bids[0]["amount"] : !bids.length ? "No Bid Made" : "";
         let smallestBid = "";
-        for(let i=0; i< bids.length; i++) {
-            // console.log("Bids",bids[i])
-            for(let j=0; j<bids.length; j++) {
-                // console.log("bids nested",bids[j],bids[i])
-                if(bids[j]["amount"] > bids[i]["amount"]) {
-                    // console.log("Greatest Bid",bids[j]["amount"])
-                    largestBid = bids[j]["amount"]
-                }
-                if(bids[j]["amount"] < bids[i]["amount"]) {
-                    //console.log("Greatest Bid",bids[j]["amount"])
-                    smallestBid = bids[j]["amount"]
-                }
-            }
-        }
+        largestBid = bidArr[bidArr.length -1];
+        smallestBid = bidArr[0];
         setMaxBid(largestBid);
         setMinBid(smallestBid);
     },[bids])
 
     return (
         <>
-        <button onClick={toggleBid}>{showMax ? "Minimum Bid": "Maximum Bid"}</button>
+        <button onClick={toggleBid}>{showMax ? "Show Minimum Bid": "Show Maximum Bid"}</button>
         <div className="customer_container">
             
             <div className="cust_name">
@@ -81,8 +70,8 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
         <div className="text-center">
            
         {ascending ? 
-        <p className="col"><p className="heading_bid">Bid Amounts by {name}</p>{bidArr.sort((a,b) => a-b
-        ).map((item,i) => <span key={i}>{item}</span>)}</p> : descending ?  <p className="col"><p className="heading_bid">Bid Amounts by {name}</p>{bidArr.sort((a,b) => b-a
+        <p className="col"><span className="heading_bid">Bid Amounts by {name}</span>{bidArr.sort((a,b) => a-b
+        ).map((item,i) => <span key={i}>{item}</span>)}</p> : descending ?  <p className="col"><span className="heading_bid">Bid Amounts by {name}</span>{bidArr.sort((a,b) => b-a
             ).map((item,i) => <span key={i}>{item}</span>)}</p> : null}
         </div>
         </>
