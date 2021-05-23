@@ -79,8 +79,10 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
             </div>
         </div>
         <div className="text-center">
-        {ascending ? <p className="col">{bidArr.sort((a,b) => a-b
-        ).map((item,i) => <span key={i}>{item}</span>)}</p> : descending ?  <p className="col">{bidArr.sort((a,b) => b-a
+           
+        {ascending ? 
+        <p className="col"><p className="heading_bid">Bid Amounts by {name}</p>{bidArr.sort((a,b) => a-b
+        ).map((item,i) => <span key={i}>{item}</span>)}</p> : descending ?  <p className="col"><p className="heading_bid">Bid Amounts by {name}</p>{bidArr.sort((a,b) => b-a
             ).map((item,i) => <span key={i}>{item}</span>)}</p> : null}
         </div>
         </>
