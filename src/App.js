@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useEffect,useState} from 'react';
+import Customer from "./Customer";
+import ReactPaginate from 'react-paginate';
+import axios from "axios";
+import "./pagination.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const [offset, setOffset] = useState(0);
+    const [data, setData] = useState([]);
+    const [perPage] = useState(2);
+    const [pageCount, setPageCount] = useState(0)
+
+    useEffect(() => {
+        async function fetchCustomers() {
+            const response =  await axios.get("https://intense-tor-76305.herokuapp.com/merchants");
+        console.log("response",response)
+        const data = response.data;
+        const slice = data.slice(offset, offset + perPage);
+        const postCustomer = slice.map(cust => <Customer 
+            key={cust["id"]}
+            name={cust["firstname"] + " " + cust["lastname"]}
+            avatarUrl={cust["avatarUrl"]}
+            email={cust["email"]}
+            phone= {cust["phone"]}
+            hasPremium={cust["hasPremium"]}
+            />
+        )
+            setData(postCustomer);
+            setPageCount(Math.ceil(data.length / perPage))
+        }
+        fetchCustomers()
+    },[offset])
+
+    const handlePagination = (e) => {
+        const selectedPage = e.selected;
+        setOffset(selectedPage * perPage)
+    }
+    console.log("Cust DAta",data)
+    return (
+        <div>
+            {data}
+            <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePagination}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+            />
+        </div>
+    )
 }
-
-export default App;
