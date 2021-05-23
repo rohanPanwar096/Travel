@@ -5,6 +5,11 @@
 	font-weight: 600;
 }
 
+.col {
+	display: flex;
+	flex-direction: column;
+}
+
 .customer_container {
 	display: flex;
 	align-items: center;
