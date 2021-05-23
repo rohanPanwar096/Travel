@@ -9,7 +9,9 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
     let ascending = false;
     let descending = false;
     let bidArr = [];
-    
+    let ascArr = bidArr.sort((a,b) => {
+        return b-a;
+    })
     const [minBid,setMinBid] = useState("");
 
     console.log("Selected Context Value",range["state"])
@@ -31,7 +33,7 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
         bidArr.push(bids[i]["amount"])
     }
 
-    console.log("BIDS",bidArr);
+    console.log("BIDS",ascArr);
 
     useEffect(() => {
         let largestBid= bids.length === 1 ? bids[0]["amount"] : !bids.length ? "No Bid Made" : "";
@@ -76,12 +78,10 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}
                 <p>{showMax ? maxBid : !minBid ? "--" : minBid}</p>
             </div>
         </div>
-        <div>
-        {ascending ? <p>{bidArr.sort((a,b) => {
-            return a-b;
-        })}</p> : descending ?  <p>{bidArr.sort((a,b) => {
-            return b-a;
-        })}</p> : null}
+        <div className="text-center">
+        {ascending ? <p className="col">{bidArr.sort((a,b) => a-b
+        ).map((item,i) => <span key={i}>{item}</span>)}</p> : descending ?  <p className="col">{bidArr.sort((a,b) => b-a
+            ).map((item,i) => <span key={i}>{item}</span>)}</p> : null}
         </div>
         </>
     )
