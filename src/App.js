@@ -13,8 +13,8 @@ export default function App() {
     useEffect(() => {
         async function fetchCustomers() {
             const response =  await axios.get("https://intense-tor-76305.herokuapp.com/merchants");
-        console.log("response",response)
         const data = response.data;
+        console.log("Whoe Response",data)
         const slice = data.slice(offset, offset + perPage);
         const postCustomer = slice.map(cust => <Customer 
             key={cust["id"]}
@@ -23,6 +23,7 @@ export default function App() {
             email={cust["email"]}
             phone= {cust["phone"]}
             hasPremium={cust["hasPremium"]}
+            bids={cust["bids"]}
             />
         )
             setData(postCustomer);
@@ -35,6 +36,7 @@ export default function App() {
         const selectedPage = e.selected;
         setOffset(selectedPage * perPage)
     }
+    
     console.log("Cust DAta",data)
     return (
         <div>
