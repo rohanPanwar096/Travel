@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useContext, useEffect,useState} from 'react';
 import Customer from "./Customer";
 import Select from "./Select";
 import ReactPaginate from 'react-paginate';
@@ -19,8 +19,7 @@ export default function App() {
         async function fetchCustomers() {
             const response =  await axios.get("https://intense-tor-76305.herokuapp.com/merchants");
         const data = response.data;
-        console.log("Whoe Response",data)
-
+        // console.log("Whoe Response",data)
         const slice = data.slice(offset, offset + perPage);
         const postCustomer = slice.map(cust => 
         <Customer 
@@ -47,8 +46,6 @@ export default function App() {
     const updateRange = (val) => {
         setRange(val)
      }
-    
-    console.log("Cust DAta",data)
     return (
         <RangeContext.Provider value={{state: range,updateRange: updateRange}}>
             <div className="App">

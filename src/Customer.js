@@ -6,8 +6,8 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
     const [maxBid,setMaxBid] = useState("");
     const [showMax,setShowMax] = useState(true);
     const range = useContext(RangeContext);
-    console.log("RANGEeeeeeeeeeeeeeeeeeeeeeeeeee",range["state"])
-    console.log("BIDS",bids);
+    console.log("Selected Context Value",range["state"])
+    // console.log("BIDS",bids);
     const [minBid,setMinBid] = useState("");
     
     const toggleBid = () => {

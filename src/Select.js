@@ -4,13 +4,13 @@ import {RangeContext} from "./App"
 export default function Select() {
 
     const [range,setRange] = useState(useContext(RangeContext)["state"]);
-    const contextVal = useContext(RangeContext)["updateRange"]
+    const contextVal = useContext(RangeContext)["updateRange"];
     const handleChange = (event)  => {
         setRange(event.target.value);
         contextVal(event.target.value)
     }
 
-    console.log("Selected Value",range)
+    // console.log("Selected Value",range)
 
     return (
         <div>

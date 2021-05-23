@@ -8,6 +8,7 @@
 .cust_name {
 	display: flex;
 	align-items: center;
+	font-weight: 600;
 }
 
 .cust_name p {
