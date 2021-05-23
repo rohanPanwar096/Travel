@@ -1,14 +1,15 @@
 import React,{useState,useEffect,useContext} from 'react';
 import "./customer.css";
-import {RangeContext} from "./App"
+import {RangeContext} from "./App";
 
-export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
+export default function Customer({name,avatarUrl,email,phone,hasPremium,bids,id}) {
     const [maxBid,setMaxBid] = useState("");
     const [showMax,setShowMax] = useState(true);
     const range = useContext(RangeContext);
-    console.log("Selected Context Value",range["state"])
-    // console.log("BIDS",bids);
+    console.log("BIDS",bids);
     const [minBid,setMinBid] = useState("");
+
+    console.log("Selected Context Value",range["state"])
     
     const toggleBid = () => {
         setShowMax(!showMax);
@@ -36,8 +37,10 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
     },[bids])
 
     return (
+        <>
+        <button onClick={toggleBid}>{showMax ? "Minimum Bid": "Maximum Bid"}</button>
         <div className="customer_container">
-            <button onClick={toggleBid}>{showMax ? "Minimum Bid": "Maximum Bid"}</button>
+            
             <div className="cust_name">
                 <p>{name}</p>
                 <img src={avatarUrl} alt="Customer Avatar"/>
@@ -51,9 +54,10 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
             <div>
                 <p>{hasPremium ? "Premium" : "Not Premium"}</p>
             </div>
-            <div className="bid_value">
+            <div className="bid_value ">
                 <p>{showMax ? maxBid : !minBid ? "--" : minBid}</p>
             </div>
         </div>
+        </>
     )
 }

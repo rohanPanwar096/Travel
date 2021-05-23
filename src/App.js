@@ -1,6 +1,7 @@
 import React,{useContext, useEffect,useState} from 'react';
 import Customer from "./Customer";
 import Select from "./Select";
+import CustomerHeader from "./CustomerHeader";
 import ReactPaginate from 'react-paginate';
 import axios from "axios";
 import "./pagination.css"
@@ -13,7 +14,7 @@ export default function App() {
     const [data, setData] = useState([]);
     const [perPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
-    const [range,setRange] = useState("1000-10000")
+    const [range,setRange] = useState("Sort-By")
 
     useEffect(() => {
         async function fetchCustomers() {
@@ -21,7 +22,7 @@ export default function App() {
         const data = response.data;
         // console.log("Whoe Response",data)
         const slice = data.slice(offset, offset + perPage);
-        const postCustomer = slice.map(cust => 
+        const postCustomer = slice.map((cust) => 
         <Customer 
             key={cust["id"]}
             name={cust["firstname"] + " " + cust["lastname"]}
@@ -30,8 +31,7 @@ export default function App() {
             phone= {cust["phone"]}
             hasPremium={cust["hasPremium"]}
             bids={cust["bids"]}
-        />
-        )
+        />)
             setData(postCustomer);
             setPageCount(Math.ceil(data.length / perPage))
         }
@@ -50,6 +50,7 @@ export default function App() {
         <RangeContext.Provider value={{state: range,updateRange: updateRange}}>
             <div className="App">
             <Select />
+            <CustomerHeader />
             {data}
             <ReactPaginate
                     previousLabel={"prev"}

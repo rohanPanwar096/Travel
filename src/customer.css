@@ -1,3 +1,10 @@
+.cust_header {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	font-weight: 600;
+}
+
 .customer_container {
 	display: flex;
 	align-items: center;
@@ -9,6 +16,10 @@
 	display: flex;
 	align-items: center;
 	font-weight: 600;
+}
+
+.cust_email {
+	margin: -5%;
 }
 
 .cust_name p {
