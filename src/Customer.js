@@ -1,9 +1,12 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import "./customer.css";
+import {RangeContext} from "./App"
 
 export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
     const [maxBid,setMaxBid] = useState("");
     const [showMax,setShowMax] = useState(true);
+    const range = useContext(RangeContext);
+    console.log("RANGEeeeeeeeeeeeeeeeeeeeeeeeeee",range["state"])
     console.log("BIDS",bids);
     const [minBid,setMinBid] = useState("");
     
@@ -15,15 +18,15 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
         let largestBid= bids.length === 1 ? bids[0]["amount"] : !bids.length ? "No Bid Made" : "";
         let smallestBid = "";
         for(let i=0; i< bids.length; i++) {
-            console.log("Bids",bids[i])
+            // console.log("Bids",bids[i])
             for(let j=0; j<bids.length; j++) {
-                console.log("bids nested",bids[j],bids[i])
+                // console.log("bids nested",bids[j],bids[i])
                 if(bids[j]["amount"] > bids[i]["amount"]) {
-                    console.log("Greatest Bid",bids[j]["amount"])
+                    // console.log("Greatest Bid",bids[j]["amount"])
                     largestBid = bids[j]["amount"]
                 }
                 if(bids[j]["amount"] < bids[i]["amount"]) {
-                    console.log("Greatest Bid",bids[j]["amount"])
+                    //console.log("Greatest Bid",bids[j]["amount"])
                     smallestBid = bids[j]["amount"]
                 }
             }
@@ -49,7 +52,7 @@ export default function Customer({name,avatarUrl,email,phone,hasPremium,bids}) {
                 <p>{hasPremium ? "Premium" : "Not Premium"}</p>
             </div>
             <div className="bid_value">
-                <p>{showMax ? maxBid : minBid}</p>
+                <p>{showMax ? maxBid : !minBid ? "--" : minBid}</p>
             </div>
         </div>
     )

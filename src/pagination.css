@@ -3,6 +3,7 @@
 	display: flex;
 	list-style: none;
 	outline: none;
+	width: 200px;
 }
 .pagination > .active > a {
 	background-color: #47ccde;
